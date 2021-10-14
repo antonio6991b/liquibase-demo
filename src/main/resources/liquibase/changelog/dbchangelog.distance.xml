@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
+
+    <changeSet id="001" author="anton">
+        <createTable tableName="city">
+            <column name="city_id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true" nullable="false"></constraints>
+            </column>
+            <column name="city_name" type="varchar(50)"></column>
+            <column name="longitude" type="double"></column>
+            <column name="lattitude" type="double"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="002" author="anton">
+        <createTable tableName="distance">
+            <column name="distance_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"></constraints>
+            </column>
+            <column name="from_city_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_from_city_id" references="city(city_id)"/>
+            </column>
+            <column name="to_city_id" type="int">
+                <constraints nullable="false" foreignKeyName="to_from_city_id" references="city(city_id)"/>
+            </column>
+
+            <column name="distance" type="int"></column>
+        </createTable>
+
+        <sqlFile path="liquibase/changelog/insert_data.sql"/>
+    </changeSet>
+</databaseChangeLog>
